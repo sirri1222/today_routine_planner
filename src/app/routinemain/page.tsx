@@ -1,9 +1,13 @@
-import React from 'react'
+import TodayRoutine from "@/component/TodayRoutine";
+import TodaySchedule from "@/component/TodaySchedule";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <TodayRoutine />
+      <TodaySchedule />
+    </>
+  );
+};
 
-export default page
+export default page;

@@ -80,12 +80,7 @@ const Login = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="기억하기"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
+              <Button type="submit" fullWidth sx={{ mt: 3, mb: 2 }}>
                 로그인
               </Button>
               <Grid container>
