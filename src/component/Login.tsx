@@ -13,17 +13,25 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { supabase } from "../lib/supabase";
 const Login = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+    try {
+      let { data, error } = await supabase.auth.signInWithPassword({
+        email: "someone@email.com",
+        password: "idkhGEfvugTepFhrNGzV",
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const defaultTheme = createTheme();
+
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
