@@ -1,9 +1,11 @@
-import React from 'react'
+import SignupInput from "@/component/SignupInput";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <SignupInput />
+    </>
+  );
+};
 
-export default page
+export default page;
