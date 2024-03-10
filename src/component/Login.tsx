@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -18,14 +17,22 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get("email") as string;
+    const email = data.get("email") as any;
     const password = data.get("password") as string;
     try {
-      let { data, error } = await supabase.auth.signInWithPassword({
-        email: "someone@email.com",
-        password: "idkhGEfvugTepFhrNGzV",
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: "https://example.com/welcome",
+        },
       });
-      console.log(data);
+      if (error) {
+        console.error("로그인 실패:", error.message);
+      } else {
+        console.log("로그인 성공:", email);
+        // 로그인 성공 후 필요한 작업 수행
+      }
     } catch (error) {
       console.log(error);
     }
