@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +12,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "../lib/supabase";
+import { useRouter } from "next/navigation";
+
 const Login = () => {
+  const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,6 +33,7 @@ const Login = () => {
         console.error("로그인 실패:", error.message);
       } else {
         console.log("로그인 성공:", email);
+        router.push("/routinemain");
         // 로그인 성공 후 필요한 작업 수행
       }
     } catch (error) {
