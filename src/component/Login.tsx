@@ -18,7 +18,6 @@ interface UserState {
   user: any;
 }
 const Login = () => {
- 
   const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,19 +25,15 @@ const Login = () => {
     const email = data.get("email") as any;
     const password = data.get("password") as string;
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password,
-        options: {
-          emailRedirectTo: "https://example.com/welcome",
-        },
+        password
       });
       if (error) {
         console.error("로그인 실패:", error.message);
       } else {
         console.log("로그인 성공:", email);
         router.push("/routinemain");
-        // 로그인 성공 후 필요한 작업 수행
       }
     } catch (error) {
       console.log(error);
