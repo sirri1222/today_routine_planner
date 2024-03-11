@@ -3,6 +3,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { TextField } from "@mui/material";
 
 const TodayRoutine = () => {
   const [checked, setChecked] = React.useState([true, false]);
@@ -33,7 +34,7 @@ const TodayRoutine = () => {
   );
 
   return (
-    <div>
+    <>
       <FormControlLabel
         label="오늘의 루틴"
         control={
@@ -45,7 +46,9 @@ const TodayRoutine = () => {
         }
       />
       {children}
-    </div>
+      <p>할일 추가하기 +</p>
+      <TextField id="standard-basic" label="Standard" variant="standard" />
+    </>
   );
 };
 

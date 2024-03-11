@@ -13,8 +13,12 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-
+import { useStore, StoreApi } from "zustand";
+interface UserState {
+  user: any;
+}
 const Login = () => {
+ 
   const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -79,7 +83,7 @@ const Login = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="이메일"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -89,7 +93,7 @@ const Login = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="비밀번호"
                 type="password"
                 id="password"
                 autoComplete="current-password"
