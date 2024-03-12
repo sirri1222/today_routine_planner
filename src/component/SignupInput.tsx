@@ -13,10 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 const defaultTheme = createTheme();
 
 const SignupInput = () => {
+  const router = useRouter;
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     const data = new FormData(event.currentTarget);
     console.log({
@@ -35,6 +37,7 @@ const SignupInput = () => {
         alert("아이디와 비밀번호를 확인해주세요");
       } else {
         alert("회원가입에 성공하였습니다.");
+        router.push("/")
       }
       console.log(data);
     } catch (error) {

@@ -4,9 +4,11 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
+import { useState } from "react";
 
 const TodayRoutine = () => {
   const [checked, setChecked] = React.useState([true, false]);
+  const [addTodo, setAddTodo] = useState(false);
 
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked]);
@@ -46,8 +48,16 @@ const TodayRoutine = () => {
         }
       />
       {children}
-      <p>할일 추가하기 +</p>
-      <TextField id="standard-basic" label="Standard" variant="standard" />
+      <p
+        onClick={() => {
+          setAddTodo(true);
+        }}
+      >
+        할일 추가하기 +
+      </p>
+      {addTodo && (
+        <TextField id="standard-basic" label="Standard" variant="standard" />
+      )}
     </>
   );
 };
