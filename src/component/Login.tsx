@@ -13,11 +13,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-import { useStore, StoreApi } from "zustand";
-interface UserState {
-  user: any;
-}
+import emailStore from "@/emailStore";
 const Login = () => {
+  const { useremail,setEmail } = emailStore();
   const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,12 +25,13 @@ const Login = () => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
       if (error) {
         console.error("로그인 실패:", error.message);
       } else {
         console.log("로그인 성공:", email);
+        setEmail(email)
         router.push("/routinemain");
       }
     } catch (error) {
