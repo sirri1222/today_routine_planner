@@ -2,7 +2,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -14,8 +13,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 import emailStore from "@/emailStore";
+import { loginInputDate, titledata } from "@/dummydata/dummydata";
+import TextFieldInput from "./share/TextFieldInput";
+import InputButton from "./share/InputButton";
 const Login = () => {
-  const { useremail,setEmail } = emailStore();
+  const { useremail, setEmail } = emailStore();
   const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,7 +33,7 @@ const Login = () => {
         console.error("로그인 실패:", error.message);
       } else {
         console.log("로그인 성공:", email);
-        setEmail(email)
+        setEmail(email);
         router.push("/routinemain");
       }
     } catch (error) {
@@ -55,15 +57,12 @@ const Login = () => {
           >
             <Typography component="h1" variant="h5">
               <div className="flex flex-col justify-center">
-                <p className="text-2xl">
-                  오<span className="text-sm">늘의</span>
-                </p>
-                <p className="text-2xl">
-                  루<span className="text-sm">틴</span>
-                </p>
-                <p className="text-2xl">
-                  완<span className="text-sm">료</span>
-                </p>
+                {titledata.map((title, i) => (
+                  <p key={i} className="text-2xl">
+                    {title.title}
+                    <span className="text-sm">{title.subtitle}</span>
+                  </p>
+                ))}
               </div>
             </Typography>
             <Box
@@ -72,33 +71,15 @@ const Login = () => {
               noValidate
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="이메일"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="비밀번호"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+              {loginInputDate.map((inputdata, i) => (
+                <TextFieldInput inputdata={inputdata} key={i} />
+              ))}
+
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="기억하기"
               />
-              <Button type="submit" fullWidth sx={{ mt: 3, mb: 2 }}>
-                로그인
-              </Button>
+             <InputButton buttonName={"로그인"} />
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">

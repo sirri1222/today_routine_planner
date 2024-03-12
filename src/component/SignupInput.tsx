@@ -1,9 +1,7 @@
 "use client";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -14,6 +12,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import InputButton from "./share/InputButton";
+import { loginInputDate } from "@/dummydata/dummydata";
+import TextFieldInput from "./share/TextFieldInput";
 
 const defaultTheme = createTheme();
 
@@ -33,11 +34,10 @@ const SignupInput = () => {
         password,
       });
       if (error) {
-   
         alert("아이디와 비밀번호를 확인해주세요");
       } else {
         alert("회원가입에 성공하였습니다.");
-        router.push("/")
+        router.push("/");
       }
       console.log(data);
     } catch (error) {
@@ -69,25 +69,10 @@ const SignupInput = () => {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="이메일"
-                  name="email"
-                  autoComplete="email"
-                />
+                <TextFieldInput inputdata={loginInputDate[0]} />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="비밀번호"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                <TextFieldInput inputdata={loginInputDate[1]} />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
@@ -98,14 +83,8 @@ const SignupInput = () => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              회원가입
-            </Button>
+            <InputButton buttonName={"회원가입"} />
+
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">
