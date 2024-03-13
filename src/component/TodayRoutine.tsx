@@ -5,8 +5,11 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
 import { useState } from "react";
-
+import emailStore from "@/emailStore";
+import { Button } from "@mui/material";
 const TodayRoutine = () => {
+  const { useremail } = emailStore();
+
   const [checked, setChecked] = React.useState([true, false]);
   const [addTodo, setAddTodo] = useState(false);
 
@@ -37,6 +40,8 @@ const TodayRoutine = () => {
 
   return (
     <>
+      <Button>{useremail}님 로그아웃</Button>
+
       <FormControlLabel
         label="오늘의 루틴"
         control={
@@ -50,7 +55,7 @@ const TodayRoutine = () => {
       {children}
       <p
         onClick={() => {
-          setAddTodo(true);
+          setAddTodo(!addTodo);
         }}
       >
         할일 추가하기 +

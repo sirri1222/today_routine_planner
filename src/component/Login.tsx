@@ -16,16 +16,18 @@ import emailStore from "@/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./share/TextFieldInput";
 import InputButton from "./share/InputButton";
-const Login = () => {
+const Login = ({ type }: { type: string }) => {
   const { useremail, setEmail } = emailStore();
   const router = useRouter();
+  const authMethod = type === "login" ? "signInWithPassword" : "signUp";
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email") as any;
     const password = data.get("password") as string;
+
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth[authMethod]({
         email,
         password,
       });
@@ -34,7 +36,7 @@ const Login = () => {
       } else {
         console.log("로그인 성공:", email);
         setEmail(email);
-        router.push("/routinemain");
+        router.push(`${type === "login" ? "/routinemain" : "/"}`);
       }
     } catch (error) {
       console.log(error);
@@ -71,15 +73,27 @@ const Login = () => {
               noValidate
               sx={{ mt: 1 }}
             >
+              <p>`${type === "login" ? "로그인" : "회원가입"}`</p>
               {loginInputDate.map((inputdata, i) => (
                 <TextFieldInput inputdata={inputdata} key={i} />
               ))}
 
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="기억하기"
+              {type === "login" ? (
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="기억하기"
+                />
+              ) : (
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="개인정보 수집에 동의합니다"
+                />
+              )}
+              <InputButton
+                buttonName={`${type === "login" ? "로그인" : "회원가입"}`}
               />
-             <InputButton buttonName={"로그인"} />
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
@@ -87,8 +101,11 @@ const Login = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"회원가입"}
+                  <Link
+                    href={`${type === "login" ? "/signup" : "/"}`}
+                    variant="body2"
+                  >
+                    {`${type === "login" ? "회원가입" : "로그인"}`}
                   </Link>
                 </Grid>
               </Grid>

@@ -16,9 +16,7 @@ interface loginInputDatetype {
   type?: string;
   buttonTitle?: string;
 }
-interface buttonDatatype {
-  buttonTitle?: string;
-}
+
 export const loginInputDate: loginInputDatetype[] = [
   {
     id: "email",
@@ -36,4 +34,29 @@ export const loginInputDate: loginInputDatetype[] = [
     type: "password",
   },
 ];
-export const buttonTitle = { loginbtn: "로그인", signupbtn: "회원가입" };
+interface loginSignupInputtype {
+  id: string;
+  title: string;
+  link: string;
+  autoComplete: string;
+  autoFocus: string;
+  type?: string;
+  buttonTitle?: string;
+}
+export const loginSignupInputDate: loginSignupInputtype[] = [
+  {
+    id: "login",
+    title: "로그인",
+    link: "/signup",
+    autoComplete: "email",
+    autoFocus: "autoFocus",
+  },
+  {
+    id: "signup",
+    title: "회원가입",
+    link: "/",
+    autoComplete: "current-password",
+    autoFocus: "autoFocus",
+    type: "password",
+  },
+];

@@ -1,9 +1,9 @@
-import SignupInput from "@/component/SignupInput";
+import Login from "@/component/Login";
 
 const page = () => {
   return (
     <>
-      <SignupInput />
+      <Login type={"signup"} />
     </>
   );
 };
