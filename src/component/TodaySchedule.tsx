@@ -1,8 +1,10 @@
-
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 const TodaySchedule = () => {
   return (
-    <div>TodaySchedule</div>
-  )
-}
+    <>
+      <DateCalendar />
+    </>
+  );
+};
 
-export default TodaySchedule
+export default TodaySchedule;

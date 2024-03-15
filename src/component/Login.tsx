@@ -73,7 +73,7 @@ const Login = ({ type }: { type: string }) => {
               noValidate
               sx={{ mt: 1 }}
             >
-              <p>`${type === "login" ? "로그인" : "회원가입"}`</p>
+              <p>{`${type === "login" ? "로그인" : "회원가입"}`}</p>
               {loginInputDate.map((inputdata, i) => (
                 <TextFieldInput inputdata={inputdata} key={i} />
               ))}
@@ -97,7 +97,7 @@ const Login = ({ type }: { type: string }) => {
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                    비밀번호 찾기
+                 { `${type === "login" ? "비밀번호 찾기" : ""}`}
                   </Link>
                 </Grid>
                 <Grid item>
