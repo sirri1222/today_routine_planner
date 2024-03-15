@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -17,7 +16,7 @@ import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./share/TextFieldInput";
 import InputButton from "./share/InputButton";
 const Login = ({ type }: { type: string }) => {
-  const { useremail, setEmail } = emailStore();
+  const { setEmail } = emailStore();
   const router = useRouter();
   const authMethod = type === "login" ? "signInWithPassword" : "signUp";
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +33,8 @@ const Login = ({ type }: { type: string }) => {
       if (error) {
         console.error("로그인 실패:", error.message);
       } else {
-        console.log("로그인 성공:", email);
+        alert(`${type === "login" ? "로그인 성공" : "회원가입 성공"}`);
+
         setEmail(email);
         router.push(`${type === "login" ? "/routinemain" : "/"}`);
       }
@@ -97,7 +97,7 @@ const Login = ({ type }: { type: string }) => {
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                 { `${type === "login" ? "비밀번호 찾기" : ""}`}
+                    {`${type === "login" ? "비밀번호 찾기" : ""}`}
                   </Link>
                 </Grid>
                 <Grid item>
