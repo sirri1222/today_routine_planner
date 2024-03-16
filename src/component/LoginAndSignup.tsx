@@ -15,10 +15,10 @@ import emailStore from "@/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./share/TextFieldInput";
 import InputButton from "./share/InputButton";
-const Login = ({ type }: { type: string }) => {
+const LoginAndSignup = ({ type }: { type: string }) => {
   const { setEmail } = emailStore();
+
   const router = useRouter();
-  // 수파베이스 auth 로그인, 회원가입 매소드 구분
   const authMethod = type === "login" ? "signInWithPassword" : "signUp";
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -122,4 +122,4 @@ const Login = ({ type }: { type: string }) => {
   );
 };
 
-export default Login;
+export default LoginAndSignup;

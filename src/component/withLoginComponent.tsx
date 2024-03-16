@@ -1,16 +1,21 @@
-import emailStore from '@/emailStore'
-import React from 'react'
+import emailStore from "@/emailStore";
+import { ChildComponentProps, WrapperProps } from "@/typedefinition/props";
+import Login from "./LoginAndSignup";
+import TodayRoutine from "./TodayRoutine";
 
-
-function withLoginComponent  (ChildComponent:) {
-  return function(){
-const { useremail } = emailStore()
-    if(useremail){
-        return <ChildComponent />
+function WithLoginComponent(
+  TodayRoutine: React.ComponentType<ChildComponentProps>
+) {
+  return function Wrapper(props: WrapperProps) {
+    const { useremail } = emailStore();
+    if (useremail) {
+      return <TodayRoutine user={useremail} {...props} />;
     }
-    return <>로그인이 필요합니다.</>
-  }
-
-  
+    return (
+      <>
+        <Login type="login" />
+      </>
+    );
+  };
 }
-export default withLoginComponent
+export default WithLoginComponent;
