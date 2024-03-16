@@ -6,7 +6,6 @@ import TodaySchedule from "@/component/TodaySchedule";
 const page = () => {
   return (
     <>
-      
       <TodayRoutine />
       <TodaySchedule />
     </>

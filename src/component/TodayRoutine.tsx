@@ -41,7 +41,6 @@ const TodayRoutine = () => {
   return (
     <>
       <Button>{useremail}님 로그아웃</Button>
-
       <FormControlLabel
         label="오늘의 루틴"
         control={
