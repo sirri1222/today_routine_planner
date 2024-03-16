@@ -15,7 +15,8 @@ import emailStore from "@/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./share/TextFieldInput";
 import InputButton from "./share/InputButton";
-const LoginAndSignup = ({ type }: { type: string }) => {
+import WithLoginComponent from "./WithLoginComponent";
+const LoginAndSignup = ({ type }: { type?: string }) => {
   const { setEmail } = emailStore();
 
   const router = useRouter();

@@ -1,21 +1,18 @@
+"use client";
 import emailStore from "@/emailStore";
 import { ChildComponentProps, WrapperProps } from "@/typedefinition/props";
-import Login from "./LoginAndSignup";
-import TodayRoutine from "./TodayRoutine";
+import LoginAndSignup from "./LoginAndSignup";
 
 function WithLoginComponent(
-  TodayRoutine: React.ComponentType<ChildComponentProps>
+  ChildComponent: React.ComponentType<ChildComponentProps>
 ) {
   return function Wrapper(props: WrapperProps) {
     const { useremail } = emailStore();
     if (useremail) {
-      return <TodayRoutine user={useremail} {...props} />;
-    }
-    return (
-      <>
-        <Login type="login" />
-      </>
-    );
+      return <ChildComponent {...props} />
+    } 
+       return <LoginAndSignup type={"login"} />
+    
   };
 }
 export default WithLoginComponent;

@@ -1,5 +1,6 @@
 export interface ChildComponentProps {
-  user: string;
+  user?: string;
+  type?: string;
 }
 
 export interface WrapperProps {}

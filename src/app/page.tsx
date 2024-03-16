@@ -1,9 +1,9 @@
-import Login from "@/component/LoginAndSignup";
+import LoginAndSignup from "@/component/LoginAndSignup";
 
 export default function Home() {
   return (
     <>
-      <Login type={"login"} />
+      <LoginAndSignup type={"login"} />
     </>
   );
 }

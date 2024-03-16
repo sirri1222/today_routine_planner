@@ -1,14 +1,14 @@
 "use client";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+
+import TodayRoutine from "./TodayRoutine";
+import WithLoginComponent from "./WithLoginComponent";
+
 const TodaySchedule = () => {
   return (
     <>
-      <LocalizationProvider>
-        <DateCalendar />
-      </LocalizationProvider>
+      <TodayRoutine />
     </>
   );
 };
 
-export default TodaySchedule;
+export default WithLoginComponent(TodaySchedule);
