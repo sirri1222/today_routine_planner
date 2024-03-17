@@ -11,7 +11,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-import emailStore from "@/emailStore";
+import emailStore from "@/stores/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./TextFieldInput";
 import InputButton from "./InputButton";

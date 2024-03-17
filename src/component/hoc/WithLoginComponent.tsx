@@ -1,6 +1,6 @@
 "use client";
-import emailStore from "@/emailStore";
-import { ChildComponentProps, WrapperProps } from "@/typedefinition/props";
+import emailStore from "@/stores/emailStore";
+import { ChildComponentProps, WrapperProps } from "@/types/props";
 import LoginAndSignup from "../LoginAndSignup";
 
 function WithLoginComponent(

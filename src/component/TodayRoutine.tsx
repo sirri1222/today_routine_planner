@@ -6,7 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import emailStore from "@/emailStore";
+import emailStore from "@/stores/emailStore";
 const TodayRoutine = () => {
   const { useremail } = emailStore();
   const [checked, setChecked] = React.useState([true, false]);
