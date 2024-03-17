@@ -1,15 +1,8 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-interface loginInputDate {
-  id: string;
-  label: string;
-  name: string;
-  autoComplete: string;
-  type?:string
-  autoFocus: string;
-}
+import { loginInputDatetype } from "@/types/props";
 
-const TextFieldInput = ({ inputdata }: {inputdata: loginInputDate}) => {
+const TextFieldInput = ({ inputdata }: { inputdata: loginInputDatetype }) => {
   return (
     <>
       <TextField
@@ -21,6 +14,7 @@ const TextFieldInput = ({ inputdata }: {inputdata: loginInputDate}) => {
         label={inputdata.label}
         name={inputdata.name}
         autoComplete={inputdata.autoComplete}
+        helperText={inputdata.helperText}
       />
     </>
   );

@@ -7,7 +7,12 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import emailStore from "@/stores/emailStore";
+import { supabase } from "@/lib/supabase";
+
 const TodayRoutine = () => {
+  const sighOutHandler = async () => {
+    await supabase.auth.signOut();
+  };
   const { useremail } = emailStore();
   const [checked, setChecked] = React.useState([true, false]);
   const [addTodo, setAddTodo] = useState(false);
@@ -39,7 +44,7 @@ const TodayRoutine = () => {
 
   return (
     <>
-      <Button>{useremail}님 로그아웃</Button>
+      <Button onClick={sighOutHandler}>{useremail}님 로그아웃</Button>
       <br />
       <FormControlLabel
         label="오늘의 루틴"

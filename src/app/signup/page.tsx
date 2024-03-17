@@ -1,9 +1,9 @@
-import Login from "@/component/LoginAndSignup";
-
+import LoginAndSignupContainer from "@/component/LoginAndSignupContainer";
+LoginAndSignupContainer
 const page = () => {
   return (
     <>
-      <Login type={"signup"} />
+      <LoginAndSignupContainer type={"signup"} />
     </>
   );
 };

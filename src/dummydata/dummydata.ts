@@ -42,7 +42,9 @@ interface loginSignupInputtype {
   autoFocus: string;
   type?: string;
   buttonTitle?: string;
+  helperText: string;
 }
+
 export const loginSignupInputDate: loginSignupInputtype[] = [
   {
     id: "login",
@@ -50,6 +52,7 @@ export const loginSignupInputDate: loginSignupInputtype[] = [
     link: "/signup",
     autoComplete: "email",
     autoFocus: "autoFocus",
+    helperText: "",
   },
   {
     id: "signup",
@@ -58,5 +61,6 @@ export const loginSignupInputDate: loginSignupInputtype[] = [
     autoComplete: "current-password",
     autoFocus: "autoFocus",
     type: "password",
+    helperText: "유효하지 않은 비밀번호 입니다.",
   },
 ];

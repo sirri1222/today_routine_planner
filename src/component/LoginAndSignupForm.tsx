@@ -9,47 +9,18 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { supabase } from "../lib/supabase";
-import { useRouter } from "next/navigation";
-import emailStore from "@/stores/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./TextFieldInput";
 import InputButton from "./InputButton";
 
-const LoginAndSignup = ({ type }: { type?: string }) => {
-  const { setEmail } = emailStore();
-
-  const router = useRouter();
-  const authMethod = type === "login" ? "signInWithPassword" : "signUp";
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get("email") as string;
-    const password = data.get("password") as string;
-
-    try {
-      const { data, error } = await supabase.auth[authMethod]({
-        email,
-        password,
-      });
-      if (error) {
-        `${
-          type === "login"
-            ? console.error("로그인 실패:", error.message)
-            : console.error("회원가입 실패:", error.message)
-        }`;
-      } else {
-        alert(`${type === "login" ? "로그인 성공" : "회원가입 완료"}`);
-
-        setEmail(email);
-        router.push(`${type === "login" ? "/routinemain" : "/"}`);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const LoginAndSignupForm = ({
+  type,
+  handleSubmit,
+}: {
+  type?: string;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
+}) => {
   const defaultTheme = createTheme();
-
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
@@ -79,7 +50,9 @@ const LoginAndSignup = ({ type }: { type?: string }) => {
               noValidate
               sx={{ mt: 1 }}
             >
-              <p>{`${type === "login" ? "로그인" : "회원가입"}`}</p>
+              <p className="flex justify-center">{`${
+                type === "login" ? "로그인 페이지" : "회원가입 페이지"
+              }`}</p>
               {loginInputDate.map((inputdata, i) => (
                 <TextFieldInput inputdata={inputdata} key={i} />
               ))}
@@ -111,7 +84,11 @@ const LoginAndSignup = ({ type }: { type?: string }) => {
                     href={`${type === "login" ? "/signup" : "/"}`}
                     variant="body2"
                   >
-                    {`${type === "login" ? "회원가입" : "로그인"}`}
+                    {`${
+                      type === "login"
+                        ? "회원가입 하러 가기"
+                        : "로그인 하러 가기"
+                    }`}
                   </Link>
                 </Grid>
               </Grid>
@@ -123,4 +100,4 @@ const LoginAndSignup = ({ type }: { type?: string }) => {
   );
 };
 
-export default LoginAndSignup;
+export default LoginAndSignupForm;

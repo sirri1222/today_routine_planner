@@ -1,8 +1,7 @@
 "use client";
 import emailStore from "@/stores/emailStore";
 import { ChildComponentProps, WrapperProps } from "@/types/props";
-import LoginAndSignup from "../LoginAndSignup";
-
+import LoginAndSignupContainer from "../LoginAndSignupContainer";
 function WithLoginComponent(
   ChildComponent: React.ComponentType<ChildComponentProps>
 ) {
@@ -11,7 +10,7 @@ function WithLoginComponent(
     if (useremail) {
       return <ChildComponent {...props} />;
     }
-    return <LoginAndSignup type={"login"} />;
+    return <LoginAndSignupContainer type={"login"} />;
   };
 }
 export default WithLoginComponent;
