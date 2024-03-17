@@ -13,9 +13,9 @@ import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 import emailStore from "@/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
-import TextFieldInput from "./share/TextFieldInput";
-import InputButton from "./share/InputButton";
-import WithLoginComponent from "./WithLoginComponent";
+import TextFieldInput from "./TextFieldInput";
+import InputButton from "./InputButton";
+import WithLoginComponent from "./hoc/WithLoginComponent";
 const LoginAndSignup = ({ type }: { type?: string }) => {
   const { setEmail } = emailStore();
 
