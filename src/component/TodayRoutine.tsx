@@ -11,7 +11,12 @@ import { supabase } from "@/lib/supabase";
 
 const TodayRoutine = () => {
   const sighOutHandler = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+      console.log("로그아웃 성공");
+  } catch (error) {
+      console.error("로그아웃 실패:");
+  }
   };
   const { useremail } = emailStore();
   const [checked, setChecked] = React.useState([true, false]);
