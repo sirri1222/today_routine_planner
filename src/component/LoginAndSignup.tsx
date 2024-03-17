@@ -15,7 +15,7 @@ import emailStore from "@/stores/emailStore";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./TextFieldInput";
 import InputButton from "./InputButton";
-import WithLoginComponent from "./hoc/WithLoginComponent";
+
 const LoginAndSignup = ({ type }: { type?: string }) => {
   const { setEmail } = emailStore();
 
