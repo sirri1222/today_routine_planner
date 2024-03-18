@@ -10,7 +10,7 @@ const emailStore = create<userDataInfo>((set) => ({
   setEmail: (email) =>
     set((state) => ({
       useremail: email,
-    })), // setUser 함수를 통해 유저 정보 업데이트
+    })), 
 }));
 
 export default emailStore;

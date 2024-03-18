@@ -8,15 +8,19 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import emailStore from "@/stores/emailStore";
 import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 const TodayRoutine = () => {
+  const router = useRouter();
   const sighOutHandler = async () => {
     try {
       await supabase.auth.signOut();
+      alert("로그아웃 되었습니다.");
+      router.push("/");
       console.log("로그아웃 성공");
-  } catch (error) {
+    } catch (error) {
       console.error("로그아웃 실패:");
-  }
+    }
   };
   const { useremail } = emailStore();
   const [checked, setChecked] = React.useState([true, false]);

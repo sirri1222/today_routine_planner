@@ -14,7 +14,6 @@ const TextFieldInput = ({ inputdata }: { inputdata: loginInputDatetype }) => {
         label={inputdata.label}
         name={inputdata.name}
         autoComplete={inputdata.autoComplete}
-        helperText={inputdata.helperText}
       />
     </>
   );

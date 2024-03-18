@@ -5,23 +5,27 @@ import { useRouter } from "next/navigation";
 import emailStore from "@/stores/emailStore";
 import LoginAndSignupForm from "./LoginAndSignupForm";
 
-const LoginAndSignupContainer = ({ type }: { type?: string }) => {
+const LoginAndSignupContainer = ({ type }: { type: string }) => {
   const { setEmail } = emailStore();
 
   const router = useRouter();
 
   const authMethod = type === "login" ? "signInWithPassword" : "signUp";
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email") as string;
     const password = data.get("password") as string;
     try {
-      const { error } = await supabase.auth[authMethod]({
+      const { data, error } = await supabase.auth[authMethod]({
         email,
         password,
       });
+      console.log(email, "이메일 ?");
+      console.log(password, "패스워드 ?");
       if (error) {
         `${
           type === "login"

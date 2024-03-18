@@ -17,8 +17,8 @@ const LoginAndSignupForm = ({
   type,
   handleSubmit,
 }: {
-  type?: string;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
+  type: string;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) => {
   const defaultTheme = createTheme();
   return (
