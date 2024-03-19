@@ -1,16 +1,28 @@
 "use client";
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
-import { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { Button } from "@mui/material";
 import emailStore from "@/stores/emailStore";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import scheduleStore from "@/stores/scheduleStore";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
 const TodayRoutine = () => {
+  const events = [{ title: "Meeting", start: new Date() }];
+
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    scheduleText.length && setAddSchedule(scheduleText);
+  };
+  const [scheduleText, setScheduleText]: [
+    string,
+    Dispatch<SetStateAction<string>>
+  ] = useState("");
+  const { scheduleList, setAddSchedule } = scheduleStore();
   const router = useRouter();
   const sighOutHandler = async () => {
     try {
@@ -74,8 +86,30 @@ const TodayRoutine = () => {
         할일 추가하기 +
       </p>
       {addTodo && (
-        <TextField id="standard-basic" label="Standard" variant="standard" />
+        <>
+          <TextField
+            id="standard-basic"
+            label="Standard"
+            variant="standard"
+            value={scheduleText}
+            onChange={(
+              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+            ) => {
+              setScheduleText(e.target.value);
+            }}
+          />
+          <button onClick={handleClick}>추가하기</button>
+        </>
       )}
+      {scheduleList.map((item) => (
+        <p key={item.title}>{item.title}</p>
+      ))}
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+        weekends={false}
+        events={scheduleList}
+      />
     </>
   );
 };
