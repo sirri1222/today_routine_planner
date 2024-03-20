@@ -4,6 +4,7 @@ interface schduleListType {
   id?: string;
   title: string;
   completed: boolean;
+  date?:string;
 }
 interface schduleListState {
   scheduleList: schduleListType[];
