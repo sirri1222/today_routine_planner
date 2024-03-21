@@ -98,7 +98,7 @@ const TodayRoutine = () => {
               setScheduleText(e.target.value);
             }}
           />
-          <button onClick={handleClick}>추가하기</button>
+          <Button onClick={handleClick}>추가하기</Button>
         </>
       )}
       {scheduleList.map((item) => (

@@ -4,10 +4,14 @@ import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 import emailStore from "@/stores/emailStore";
 import LoginAndSignupForm from "./LoginAndSignupForm";
+import { useState } from "react";
+import { AlertTitle } from "@mui/material";
 
 const LoginAndSignupContainer = ({ type }: { type: string }) => {
-  const { setEmail } = emailStore();
-
+  const { useremail, setEmail } = emailStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSumitted, setIsSumitted] = useState(false);
+  const [error, setError] = useState<null | string>(null);
   const router = useRouter();
 
   const authMethod = type === "login" ? "signInWithPassword" : "signUp";
@@ -16,35 +20,37 @@ const LoginAndSignupContainer = ({ type }: { type: string }) => {
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
+    setIsLoading(true);
+    setError(null);
     const data = new FormData(event.currentTarget);
     const email = data.get("email") as string;
     const password = data.get("password") as string;
     try {
-      const { data, error } = await supabase.auth[authMethod]({
+      const { error } = await supabase.auth[authMethod]({
         email,
         password,
       });
-      console.log(email, "이메일 ?");
-      console.log(password, "패스워드 ?");
       if (error) {
-        `${
-          type === "login"
-            ? console.error("로그인 실패:", error.message)
-            : console.error("회원가입 실패:", error.message)
-        }`;
+        setError(error.message);
       } else {
         alert(`${type === "login" ? "로그인 성공" : "회원가입 완료"}`);
-
+        setIsSumitted(true);
         setEmail(email);
         router.push(`${type === "login" ? "/routinemain" : "/"}`);
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {error && <AlertTitle>{error}</AlertTitle>}
+
       <LoginAndSignupForm handleSubmit={handleSubmit} type={type} />
     </>
   );
