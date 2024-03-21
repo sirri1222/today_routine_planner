@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import emailStore from "@/stores/emailStore";
 import LoginAndSignupForm from "./LoginAndSignupForm";
 import { useState } from "react";
-import { AlertTitle } from "@mui/material";
+import { AlertTitle, Modal } from "@mui/material";
 
 const LoginAndSignupContainer = ({ type }: { type: string }) => {
   const { useremail, setEmail } = emailStore();
@@ -48,11 +48,14 @@ const LoginAndSignupContainer = ({ type }: { type: string }) => {
   };
 
   return (
-    <>
-      {error && <AlertTitle>{error}</AlertTitle>}
-
+    <div className="relative">
+      {error && (
+        <h1 className="bg-white flex justify-center items-center">
+          유효하지 않은 아이디 입니다.
+        </h1>
+      )}
       <LoginAndSignupForm handleSubmit={handleSubmit} type={type} />
-    </>
+    </div>
   );
 };
 
