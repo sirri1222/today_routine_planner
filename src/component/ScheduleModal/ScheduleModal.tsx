@@ -105,10 +105,16 @@ const ScheduleModal = ({
                 value={description}
               />
             </Typography>
-            <div className="flex justify-around">
-              <InputButton buttonName="추가하기" />
-              <Button onClick={closeHandler} variant="contained">
-                취소
+            <div className="flex justify-evenly">
+              <Button className="buttoncolor" variant="contained" type="submit">
+                추가하기
+              </Button>
+              <Button
+                onClick={closeHandler}
+                className="buttoncolor"
+                variant="contained"
+              >
+                취소하기
               </Button>
             </div>
           </Box>

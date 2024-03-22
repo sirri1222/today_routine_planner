@@ -1,5 +1,5 @@
-import LoginAndSignupContainer from "@/component/LoginAndSignupContainer";
-LoginAndSignupContainer
+import LoginAndSignupContainer from "@/component/LoginSignup/LoginAndSignupContainer";
+LoginAndSignupContainer;
 const page = () => {
   return (
     <>

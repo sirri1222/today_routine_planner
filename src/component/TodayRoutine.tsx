@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Button } from "@mui/material";
+import { Button, List } from "@mui/material";
 import emailStore from "@/stores/emailStore";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import ScheduleModal from "./ScheduleModal/ScheduleModal";
 import SingleSchedule from "./SingleSchedule";
-import Head from "next/head";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { scheduledatatype } from "@/types/scheduledata";
@@ -45,10 +44,8 @@ const TodayRoutine = () => {
   }, [supabase]);
   console.log(schedules, "데이터");
   return (
-    <div className="px-[11.5rem]">
-      <Head>
-        <Button onClick={sighOutHandler}>{useremail}님 로그아웃</Button>
-      </Head>
+    <div className="mainwidth relative mx-auto">
+      <Button onClick={sighOutHandler}>{useremail}님 로그아웃</Button>
       <p
         onClick={() => {
           setAddTodo(!addTodo);
@@ -57,11 +54,11 @@ const TodayRoutine = () => {
         할일 추가하기 +
       </p>
       {addTodo && <ScheduleModal setAddTodo={setAddTodo} addTodo={addTodo} />}
-      {schedules.map((schedule) => (
-        <div className="flex justify-between">
+      <div className="flex justify-around">
+        {schedules.map((schedule) => (
           <SingleSchedule schedule={schedule} key={schedule.id} />
-        </div>
-      ))}
+        ))}
+      </div>
       {/* <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"

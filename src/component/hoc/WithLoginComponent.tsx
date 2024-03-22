@@ -1,7 +1,7 @@
 "use client";
 import emailStore from "@/stores/emailStore";
 import { ChildComponentProps, WrapperProps } from "@/types/props";
-import LoginAndSignupContainer from "../LoginAndSignupContainer";
+import LoginAndSignupContainer from "../LoginSignup/LoginAndSignupContainer";
 function WithLoginComponent(
   ChildComponent: React.ComponentType<ChildComponentProps>
 ) {

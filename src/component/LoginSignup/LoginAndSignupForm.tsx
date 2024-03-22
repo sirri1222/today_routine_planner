@@ -11,7 +11,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { loginInputDate, titledata } from "@/dummydata/dummydata";
 import TextFieldInput from "./TextFieldInput";
-import InputButton from "./InputButton";
+import InputButton from "../InputButton";
 
 const LoginAndSignupForm = ({
   type,

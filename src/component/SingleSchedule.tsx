@@ -1,10 +1,6 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { Button, CardActionArea } from "@mui/material";
+import { ListItem, ListItemText } from "@mui/material";
 import { DateTimeFormatOptions } from "intl";
-import { Database } from "@/lib/schema";
 import { scheduledatatype } from "@/types/scheduledata";
 
 interface optionstype {
@@ -32,21 +28,17 @@ const SingleSchedule = ({ schedule }: { schedule: scheduledatatype }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {schedule.title}
-          </Typography>
-          <Typography gutterBottom variant="h2" component="div">
-            {getDateInMonthDayYear(schedule.insertedat)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {schedule.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <div className="mx-auto border-slate-200 border-solid rounded-xl bg-red-300 py-5 w-[19rem] h-[11rem]">
+      <p className="text-gray-400">
+        {getDateInMonthDayYear(schedule.insertedat)}
+      </p>
+      <p className="text-xl">
+        {schedule.title ? schedule.title : "할일을 입력해주세요."}
+      </p>
+      <p className="text-sm">
+        {schedule.description ? schedule.description : "할일을 입력해주세요."}
+      </p>
+    </div>
   );
 };
 

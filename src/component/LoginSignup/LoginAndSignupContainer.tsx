@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
 import emailStore from "@/stores/emailStore";
 import LoginAndSignupForm from "./LoginAndSignupForm";
