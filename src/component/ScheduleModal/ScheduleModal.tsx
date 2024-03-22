@@ -1,10 +1,11 @@
 import { supabase } from "@/lib/supabase";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import InputButton from "../InputButton";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Container from "@mui/material/Container";
 const ScheduleModal = ({
   setAddTodo,
   addTodo,
@@ -49,15 +50,18 @@ const ScheduleModal = ({
     setAddTodo(false);
   };
   const style = {
-    position: "flex",
-    justifyContents:"center",
+    position: "absolute" as "absolute",
+    flexDirection: "column",
+    alignItems: "center",
+    display: "flex",
+    top: "50%",
+    left: "50%",
     transform: "translate(-50%, -50%)",
-    bgcolor: "background.papaer",
+    width: 400,
+    bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
-    pt: 4,
-    px: 4,
-    pb: 3,
+    p: 4,
   };
 
   return (
@@ -67,29 +71,32 @@ const ScheduleModal = ({
         open={addTodo}
         onClose={closeHandler}
       >
-        <Box
-          className="relative"
-          component="form"
-          onSubmit={submitHandler}
-          noValidate
-          sx={{ ...style, width: 400 }}
-        >
-          <div className="flex flex-col justify-center items-center">
+        <Container component="main" maxWidth="xs">
+          <Box
+            className="relative"
+            component="form"
+            onSubmit={submitHandler}
+            noValidate
+            sx={{ ...style, width: 400 }}
+          >
             <p>스케줄 추가하기</p>
-            <div>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                <TextField
-                  placeholder="제목을 입력해주세요"
-                  onChange={(
-                    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                  ) => {
-                    setTitle(e.target.value);
-                  }}
-                  value={title}
-                />
-              </Typography>
-            </div>
-            <div>
+            <Typography
+              id="modal-modal-title"
+              sx={{ mt: 6, mb: 6 }}
+              variant="h6"
+              component="h2"
+            >
+              <TextField
+                placeholder="제목을 입력해주세요"
+                onChange={(
+                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                ) => {
+                  setTitle(e.target.value);
+                }}
+                value={title}
+              />
+            </Typography>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
               <TextField
                 placeholder="설명을 적어주세요"
                 onChange={(
@@ -97,10 +104,15 @@ const ScheduleModal = ({
                 ) => setDescription(e.target.value)}
                 value={description}
               />
+            </Typography>
+            <div className="flex justify-around">
+              <InputButton buttonName="추가하기" />
+              <Button onClick={closeHandler} variant="contained">
+                취소
+              </Button>
             </div>
-          </div>
-          <InputButton buttonName={"추가하기"} />
-        </Box>
+          </Box>
+        </Container>
       </Modal>
     </>
   );
