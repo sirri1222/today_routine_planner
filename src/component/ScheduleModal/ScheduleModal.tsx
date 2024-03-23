@@ -1,45 +1,67 @@
 import { supabase } from "@/lib/supabase";
-import { Button, TextField } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
-import InputButton from "../InputButton";
-import Typography from "@mui/material/Typography";
+import { Button, TextField, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Container from "@mui/material/Container";
+import { useState } from "react";
+import emailStore from "@/stores/emailStore";
+import { useSession } from "@supabase/auth-helpers-react";
+
 const ScheduleModal = ({
+  type,
+  openModal,
+  setOpenModal,
   setAddTodo,
   addTodo,
 }: {
-  setAddTodo: React.Dispatch<React.SetStateAction<boolean>>;
-  addTodo: boolean;
+  type?: string;
+  openModal?: boolean;
+  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setAddTodo?: React.Dispatch<React.SetStateAction<boolean>>;
+  addTodo?: boolean;
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isComplete, setIsComplete] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const session = useSession();
   const submitHandler = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
     setErrorMessage("");
     if (description.length <= 10) {
-      setErrorMessage("Description must have more than 10 characters");
+      setErrorMessage("10글자 이상 적어주세요");
       return;
     }
-    setIsLoading(true);
-    const user = supabase.auth.getUser();
-    const { error } = await supabase
-      .from("todos")
-      .insert([
-        { title, description, isComplete, user_id: (await user).data.user?.id },
-      ]);
-    setIsLoading(false);
-    if (error) {
-      setErrorMessage(error.message);
-    } else {
-      closeHandler();
+    try {
+      const { data, error } =
+        type === "add"
+          ? await supabase.from("todos").insert([
+              {
+                title,
+                description,
+                isComplete,
+                user_id: session?.user.email,
+              },
+            ])
+          : await supabase
+              .from("todos")
+              .update({
+                title,
+                description,
+                isComplete,
+                user_id: session?.user.email,
+              })
+              .eq("some_column", "someValue")
+              .select();
+      console.log(data, "모달컴포넌트데이터");
+      if (error) {
+      } else {
+        closeHandler();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -47,7 +69,11 @@ const ScheduleModal = ({
     setTitle("");
     setDescription("");
     setIsComplete(false);
-    setAddTodo(false);
+    if (type === "add") {
+      setAddTodo?.(false);
+    } else {
+      setOpenModal?.(false);
+    }
   };
   const style = {
     position: "absolute" as "absolute",
@@ -68,7 +94,7 @@ const ScheduleModal = ({
     <>
       <Modal
         aria-labelledby="modal-modal-title"
-        open={addTodo}
+        open={type === "add" ? !!addTodo : !!openModal}
         onClose={closeHandler}
       >
         <Container component="main" maxWidth="xs">
@@ -106,12 +132,16 @@ const ScheduleModal = ({
               />
             </Typography>
             <div className="flex justify-evenly">
-              <Button className="buttoncolor" variant="contained" type="submit">
+              <Button
+                className="buttoncolor mx-5"
+                variant="contained"
+                type="submit"
+              >
                 추가하기
               </Button>
               <Button
                 onClick={closeHandler}
-                className="buttoncolor"
+                className="buttoncolor mx-5"
                 variant="contained"
               >
                 취소하기

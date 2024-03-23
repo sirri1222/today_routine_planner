@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 
+import SessionProvider from "@/component/auth/SessionProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({
       </Head>
       <html lang="ko">
         <body className={inter.className}>
-       {children}
+          <SessionProvider>{children}</SessionProvider>
         </body>
       </html>
     </>

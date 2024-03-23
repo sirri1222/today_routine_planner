@@ -10,7 +10,7 @@ const emailStore = create<userDataInfo>((set) => ({
   setEmail: (email) =>
     set((state) => ({
       useremail: email,
-    })), 
+    })),
 }));
 
 export default emailStore;
