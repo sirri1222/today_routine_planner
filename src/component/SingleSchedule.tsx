@@ -14,8 +14,15 @@ interface optionstype {
   minute: string;
 }
 
-const SingleSchedule = ({ schedule }: { schedule: scheduledatatype }) => {
+const SingleSchedule = ({
+  schedule,
+  onDelete,
+}: {
+  schedule: scheduledatatype;
+  onDelete: () => void;
+}) => {
   const [openModal, setOpenModal] = useState(false);
+
   const getDateInMonthDayYear = (date: string | number | Date) => {
     const d = new Date(date);
     const options: DateTimeFormatOptions = {
@@ -36,7 +43,7 @@ const SingleSchedule = ({ schedule }: { schedule: scheduledatatype }) => {
   };
 
   return (
-    <div className="flex justify-around items-center">
+    <div className="flex justify-around items-center text-center">
       <div className="mx-auto border-slate-200 border-solid rounded-xl bg-red-300 py-5 w-[19rem] h-[11rem]">
         <p className="text-gray-400">
           {getDateInMonthDayYear(schedule.insertedat)}
@@ -48,11 +55,12 @@ const SingleSchedule = ({ schedule }: { schedule: scheduledatatype }) => {
           {schedule.description ? schedule.description : "할일을 입력해주세요."}
         </p>
         <div>
-          <button>삭제</button>
+          <button onClick={onDelete}>삭제</button>
           <button onClick={updateModalHandler}>수정</button>
         </div>
-        {openModal && <ScheduleModal openModal={openModal} setOpenModal={setOpenModal} />}
-        
+        {openModal && (
+          <ScheduleModal openModal={openModal} setOpenModal={setOpenModal} />
+        )}
       </div>
     </div>
   );

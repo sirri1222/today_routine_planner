@@ -40,6 +40,15 @@ const TodayRoutine = () => {
     fetchTodos();
   }, [supabase]);
   console.log(schedules, "데이터");
+
+  const deleteSchedule = async (id: number) => {
+    try {
+      await supabase.from("todos").delete().eq("id", id).throwOnError();
+      setSchedules(schedules.filter((x) => x.id != id));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <div className="relative">
       <AppBar position="static">
@@ -61,10 +70,16 @@ const TodayRoutine = () => {
         </Toolbar>
       </AppBar>
       <div className="mainwidth relative mx-auto">
-        {addTodo && <ScheduleModal type="add" setAddTodo={setAddTodo} addTodo={addTodo} />}
+        {addTodo && (
+          <ScheduleModal type="add" setAddTodo={setAddTodo} addTodo={addTodo} />
+        )}
         <div className="flex justify-around">
           {schedules.map((schedule) => (
-            <SingleSchedule schedule={schedule} key={schedule.id} />
+            <SingleSchedule
+              schedule={schedule}
+              onDelete={() => deleteSchedule(Number(schedule.id))}
+              key={schedule.id}
+            />
           ))}
         </div>
         {/* <FullCalendar
