@@ -49,6 +49,21 @@ const TodayRoutine = () => {
       console.log("error", error);
     }
   };
+
+  const updateSchedule = (
+    id: number,
+    newTitle: string,
+    newDescription: string
+  ) => {
+    setSchedules(
+      schedules.map((schedule) => {
+        if (schedule.id === id) {
+          return { ...schedule, title: newTitle, description: newDescription };
+        }
+        return schedule;
+      })
+    );
+  };
   return (
     <div className="relative">
       <AppBar position="static">
@@ -79,6 +94,13 @@ const TodayRoutine = () => {
               schedule={schedule}
               onDelete={() => deleteSchedule(Number(schedule.id))}
               key={schedule.id}
+              onUpdate={() => {
+                updateSchedule(
+                  Number(schedule.id),
+                  schedule.title,
+                  schedule.description
+                );
+              }}
             />
           ))}
         </div>

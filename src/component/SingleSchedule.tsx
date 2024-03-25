@@ -17,12 +17,17 @@ interface optionstype {
 const SingleSchedule = ({
   schedule,
   onDelete,
+  onUpdate,
 }: {
   schedule: scheduledatatype;
   onDelete: () => void;
+  onUpdate: (id: number, newTitle: string, newDescription: string) => void;
 }) => {
   const [openModal, setOpenModal] = useState(false);
-
+  const [updatedTitle, setUpdatedTitle] = useState(schedule.title);
+  const [updatedDescription, setUpdateDescription] = useState(
+    schedule.description
+  );
   const getDateInMonthDayYear = (date: string | number | Date) => {
     const d = new Date(date);
     const options: DateTimeFormatOptions = {
@@ -37,11 +42,24 @@ const SingleSchedule = ({
     const replase = n.replace(new RegExp(",", "g"), " ");
     return replase;
   };
-
-  const updateModalHandler = () => {
+  const updateHandler = () => {
+    onUpdate(schedule.id, updatedTitle, updatedDescription);
+    setOpenModal(false);
+  };
+  const modalOpenHandler = () => {
     setOpenModal(true);
   };
 
+  const onChangeNewTitle = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setUpdatedTitle(e.target.value);
+  };
+  const onChangeNewDescription = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setUpdateDescription(e.target.value);
+  };
   return (
     <div className="flex justify-around items-center text-center">
       <div className="mx-auto border-slate-200 border-solid rounded-xl bg-red-300 py-5 w-[19rem] h-[11rem]">
@@ -56,10 +74,18 @@ const SingleSchedule = ({
         </p>
         <div>
           <button onClick={onDelete}>삭제</button>
-          <button onClick={updateModalHandler}>수정</button>
+          <button onClick={modalOpenHandler}>수정</button>
         </div>
         {openModal && (
-          <ScheduleModal openModal={openModal} setOpenModal={setOpenModal} />
+          <ScheduleModal
+            updateHandler={updateHandler}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            onChangeNewTitle={onChangeNewTitle}
+            onChangeNewDescription={onChangeNewDescription}
+            updatedTitle={updatedTitle}
+            updatedDescription={updatedDescription}
+          />
         )}
       </div>
     </div>

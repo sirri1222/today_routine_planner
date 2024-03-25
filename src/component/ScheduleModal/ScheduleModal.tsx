@@ -13,12 +13,26 @@ const ScheduleModal = ({
   setOpenModal,
   setAddTodo,
   addTodo,
+  updateHandler,
+  onChangeNewTitle,
+  onChangeNewDescription,
+  updatedTitle,
+  updatedDescription,
 }: {
   type?: string;
   openModal?: boolean;
   setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
   setAddTodo?: React.Dispatch<React.SetStateAction<boolean>>;
   addTodo?: boolean;
+  updatedTitle?: string;
+  updatedDescription?: string;
+  updateHandler?: () => void;
+  onChangeNewTitle?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  onChangeNewDescription?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -101,7 +115,7 @@ const ScheduleModal = ({
           <Box
             className="relative"
             component="form"
-            onSubmit={submitHandler}
+            onSubmit={type === "add" ? submitHandler : updateHandler}
             noValidate
             sx={{ ...style, width: 400 }}
           >
@@ -114,21 +128,33 @@ const ScheduleModal = ({
             >
               <TextField
                 placeholder="제목을 입력해주세요"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setTitle(e.target.value);
-                }}
-                value={title}
+                onChange={
+                  type === "add"
+                    ? (
+                        e: React.ChangeEvent<
+                          HTMLInputElement | HTMLTextAreaElement
+                        >
+                      ) => {
+                        setTitle(e.target.value);
+                      }
+                    : onChangeNewTitle
+                }
+                value={type === "add" ? title : updatedTitle}
               />
             </Typography>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <TextField
                 placeholder="설명을 적어주세요"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => setDescription(e.target.value)}
-                value={description}
+                onChange={
+                  type === "add"
+                    ? (
+                        e: React.ChangeEvent<
+                          HTMLInputElement | HTMLTextAreaElement
+                        >
+                      ) => setDescription(e.target.value)
+                    : onChangeNewDescription
+                }
+                value={type === "add" ? description : updatedDescription}
               />
             </Typography>
             <div className="flex justify-evenly">
