@@ -1,108 +1,27 @@
-import { supabase } from "@/lib/supabase";
 import { Button, TextField, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Container from "@mui/material/Container";
-import { useState } from "react";
-import emailStore from "@/stores/emailStore";
-import { useSession } from "@supabase/auth-helpers-react";
-import { scheduledatatype } from "@/types/scheduledata";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import BasicDatePicker from "../BasicDatePicker";
+import useInput from "@/hooks/useInput";
 
 const ScheduleModal = ({
   type,
-  openModal,
-  setOpenModal,
-  setAddTodo,
-  addTodo,
-  updateHandler,
   onChangeNewTitle,
-  onChangeNewDescription,
   updatedTitle,
+  onChangeNewDescription,
   updatedDescription,
-  setSchedules,
 }: {
-  setSchedules?: React.Dispatch<React.SetStateAction<scheduledatatype[]>>;
   type?: string;
-  openModal?: boolean;
-  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  setAddTodo?: React.Dispatch<React.SetStateAction<boolean>>;
-  addTodo?: boolean;
-  updatedTitle?: string;
-  updatedDescription?: string;
-  updateHandler?: () => void;
-  onChangeNewTitle?: (
+  onChangeNewTitle: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  onChangeNewDescription?: (
+  updatedTitle: string;
+  onChangeNewDescription: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  updatedDescription: string;
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const session = useSession();
-  const submitHandler = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    event.preventDefault();
-    setErrorMessage("");
-    if (description.length <= 10) {
-      setErrorMessage("10글자 이상 적어주세요");
-      return;
-    }
-    try {
-      const { data, error } =
-        type === "add"
-          ? await supabase.from("todos").insert([
-              {
-                title,
-                description,
-                isComplete,
-                user_id: session?.user.email,
-              },
-            ])
-          : await supabase
-              .from("todos")
-              .update({
-                title,
-                description,
-                isComplete,
-                user_id: session?.user.email,
-              })
-              .eq("some_column", "someValue")
-              .select();
-      console.log(data, "모달컴포넌트데이터");
-      if (error) {
-      } else {
-        if (data !== null && Array.isArray(data)) {
-          const newSchedule = {
-            id: data.length + 1,
-            title: title,
-            description: description,
-          };
-          type === "add"
-            ? setSchedules?.([...data, newSchedule])
-            : closeHandler();
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const closeHandler = () => {
-    setTitle("");
-    setDescription("");
-    setIsComplete(false);
-    if (type === "add") {
-      setAddTodo?.(false);
-    } else {
-      setOpenModal?.(false);
-    }
-  };
   const style = {
     position: "absolute" as "absolute",
     flexDirection: "column",
@@ -117,19 +36,32 @@ const ScheduleModal = ({
     boxShadow: 24,
     p: 4,
   };
-
+  const {
+    addTodo,
+    closeUpdateModalHandler,
+    closeAddModalHandler,
+    submitAddHandler,
+    submitUpdateHandler,
+    title,
+    setTitle,
+    openModal,
+    setDescription,
+    description,
+  } = useInput();
   return (
     <>
       <Modal
         aria-labelledby="modal-modal-title"
         open={type === "add" ? !!addTodo : !!openModal}
-        onClose={closeHandler}
+        onClose={
+          type === "add" ? closeAddModalHandler : closeUpdateModalHandler
+        }
       >
         <Container component="main" maxWidth="xs">
           <Box
             className="relative"
             component="form"
-            onSubmit={type === "add" ? submitHandler : updateHandler}
+            onSubmit={type === "add" ? submitAddHandler : submitUpdateHandler}
             noValidate
             sx={{ ...style, width: 400 }}
           >
@@ -181,7 +113,11 @@ const ScheduleModal = ({
                 추가하기
               </Button>
               <Button
-                onClick={closeHandler}
+                onClick={
+                  type === "add"
+                    ? closeAddModalHandler
+                    : closeUpdateModalHandler
+                }
                 className="buttoncolor mx-5"
                 variant="contained"
               >
