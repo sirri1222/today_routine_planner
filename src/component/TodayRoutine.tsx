@@ -6,7 +6,6 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import ScheduleModal from "./ScheduleModal/ScheduleModal";
 import SingleSchedule from "./SingleSchedule";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import { scheduledatatype } from "@/types/scheduledata";
 import { useSession } from "@supabase/auth-helpers-react";
 
@@ -86,7 +85,12 @@ const TodayRoutine = () => {
       </AppBar>
       <div className="mainwidth relative mx-auto">
         {addTodo && (
-          <ScheduleModal type="add" setAddTodo={setAddTodo} addTodo={addTodo} />
+          <ScheduleModal
+            setSchedules={setSchedules}
+            type="add"
+            setAddTodo={setAddTodo}
+            addTodo={addTodo}
+          />
         )}
         <div className="flex justify-around">
           {schedules.map((schedule) => (

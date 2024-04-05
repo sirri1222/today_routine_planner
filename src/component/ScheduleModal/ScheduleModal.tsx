@@ -6,6 +6,9 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import emailStore from "@/stores/emailStore";
 import { useSession } from "@supabase/auth-helpers-react";
+import { scheduledatatype } from "@/types/scheduledata";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import BasicDatePicker from "../BasicDatePicker";
 
 const ScheduleModal = ({
   type,
@@ -18,7 +21,9 @@ const ScheduleModal = ({
   onChangeNewDescription,
   updatedTitle,
   updatedDescription,
+  setSchedules,
 }: {
+  setSchedules?: React.Dispatch<React.SetStateAction<scheduledatatype[]>>;
   type?: string;
   openModal?: boolean;
   setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -72,7 +77,16 @@ const ScheduleModal = ({
       console.log(data, "모달컴포넌트데이터");
       if (error) {
       } else {
-        closeHandler();
+        if (data !== null && Array.isArray(data)) {
+          const newSchedule = {
+            id: data.length + 1,
+            title: title,
+            description: description,
+          };
+          type === "add"
+            ? setSchedules?.([...data, newSchedule])
+            : closeHandler();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -120,6 +134,7 @@ const ScheduleModal = ({
             sx={{ ...style, width: 400 }}
           >
             <p>스케줄 추가하기</p>
+            <BasicDatePicker />
             <Typography
               id="modal-modal-title"
               sx={{ mt: 6, mb: 6 }}
