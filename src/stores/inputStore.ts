@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import  {Schedule, StoreActions, StoreState } from "../types/inputState";
+import  {StoreActions, StoreState } from "../types/inputState";
 
 const useInputStore = create<StoreState & StoreActions>((set) => ({
   addTodo: false,
