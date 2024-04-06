@@ -1,19 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
-import emailStore from "@/stores/emailStore";
+import React, { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useSession } from "@supabase/auth-helpers-react";
-import { scheduledatatype } from "@/types/scheduledata";
+import useInputState from "@/stores/inputStore";
 
 export default function useInput() {
-  const [addTodo, setAddTodo] = useState(false);
-  const [schedules, setSchedules] = useState<scheduledatatype[]>([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  
+  const {
+    addTodo,
+    schedules,
+    title,
+    description,
+    isComplete,
+    errorMessage,
+    openModal,
+    setAddTodo,
+    setSchedules,
+    setTitle,
+    setDescription,
+    setIsComplete,
+    setErrorMessage,
+    setOpenModal,
+  } = useInputState();
+
   const router = useRouter();
   const session = useSession();
 
@@ -26,6 +34,9 @@ export default function useInput() {
     } catch (error) {
       console.error("로그아웃 실패:");
     }
+  };
+  const openAddModalHandler = () => {
+    setAddTodo(!addTodo);
   };
 
   const deleteSchedule = async (id: number) => {
@@ -110,13 +121,13 @@ export default function useInput() {
     setTitle("");
     setDescription("");
     setIsComplete(false);
-    setAddTodo?.(false);
+    setAddTodo(false);
   };
   const closeUpdateModalHandler = () => {
     setTitle("");
     setDescription("");
     setIsComplete(false);
-    setOpenModal?.(false);
+    setOpenModal(false);
   };
 
   useEffect(() => {
@@ -135,7 +146,6 @@ export default function useInput() {
 
   return {
     addTodo,
-    setAddTodo,
     schedules,
     setSchedules,
     session,
@@ -153,5 +163,6 @@ export default function useInput() {
     setOpenModal,
     setDescription,
     description,
+    openAddModalHandler,
   };
 }

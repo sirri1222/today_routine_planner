@@ -4,13 +4,11 @@ import TodayRoutine from "./TodayRoutine";
 import WithLoginComponent from "./hoc/WithLoginComponent";
 
 const TodaySchedule = () => {
-
   return (
     <>
-      <TodayRoutine />
+      <TodayRoutine type="add" />
     </>
   );
 };
-
 
 export default WithLoginComponent(TodaySchedule);

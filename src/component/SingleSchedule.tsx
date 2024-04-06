@@ -24,7 +24,7 @@ const SingleSchedule = ({ schedule }: { schedule: scheduledatatype }) => {
   };
   const updateHandler = () => {
     onUpdate();
-    setOpenModal(false);
+    setOpenModal(true);
   };
   const onChangeNewTitle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -74,6 +74,7 @@ const SingleSchedule = ({ schedule }: { schedule: scheduledatatype }) => {
             updatedTitle={updatedTitle}
             onChangeNewDescription={onChangeNewDescription}
             updatedDescription={updatedDescription}
+            type=""
           />
         )}
       </div>

@@ -5,9 +5,8 @@ import ScheduleModal from "./ScheduleModal/ScheduleModal";
 import useInpute from "../hooks/useInput";
 import ScheduleList from "./ScheduleList";
 
-const TodayRoutine = () => {
-  const { addTodo, setAddTodo, setSchedules, session,sighOutHandler } = useInpute();
-
+const TodayRoutine = ({ type }: { type: string }) => {
+  const { addTodo, openAddModalHandler, session, sighOutHandler } = useInpute();
   return (
     <div className="relative">
       <AppBar position="static">
@@ -19,9 +18,7 @@ const TodayRoutine = () => {
             <Button
               className="buttoncolor"
               variant="contained"
-              onClick={() => {
-                setAddTodo(!addTodo);
-              }}
+              onClick={type === "add" ? openAddModalHandler: openAddModalHandler}
             >
               할일 추가하기 +
             </Button>
@@ -29,11 +26,6 @@ const TodayRoutine = () => {
         </Toolbar>
       </AppBar>
       <div className="mainwidth relative mx-auto">
-        {addTodo && (
-          <ScheduleModal
-            type="add"
-          />
-        )}
         <ScheduleList />
         {/* <FullCalendar
         plugins={[dayGridPlugin]}
@@ -42,6 +34,7 @@ const TodayRoutine = () => {
         events={schedules}
       /> */}
       </div>
+      {addTodo && <ScheduleModal type="add" />}
     </div>
   );
 };

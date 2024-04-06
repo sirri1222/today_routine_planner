@@ -13,14 +13,14 @@ const ScheduleModal = ({
   updatedDescription,
 }: {
   type?: string;
-  onChangeNewTitle: (
+  onChangeNewTitle?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  updatedTitle: string;
-  onChangeNewDescription: (
+  updatedTitle?: string;
+  onChangeNewDescription?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  updatedDescription: string;
+  updatedDescription?: string;
 }) => {
   const style = {
     position: "absolute" as "absolute",
@@ -48,11 +48,12 @@ const ScheduleModal = ({
     setDescription,
     description,
   } = useInput();
+  console.log(addTodo, "____________");
   return (
     <>
       <Modal
         aria-labelledby="modal-modal-title"
-        open={type === "add" ? !!addTodo : !!openModal}
+        open={type === "add" ? addTodo : openModal}
         onClose={
           type === "add" ? closeAddModalHandler : closeUpdateModalHandler
         }
@@ -66,7 +67,7 @@ const ScheduleModal = ({
             sx={{ ...style, width: 400 }}
           >
             <p>스케줄 추가하기</p>
-            <BasicDatePicker />
+            {/* <BasicDatePicker /> */}
             <Typography
               id="modal-modal-title"
               sx={{ mt: 6, mb: 6 }}
